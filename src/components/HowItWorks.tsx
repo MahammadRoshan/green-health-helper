@@ -1,50 +1,36 @@
-import { Camera, Cpu, FileText } from "lucide-react";
-
 const steps = [
   {
-    icon: Camera,
-    title: "Capture & Describe",
-    desc: "Upload a photo of your affected crop or select observed symptoms from our checklist.",
+    code: "01/CAPT",
+    title: "Capture & Sync",
+    desc: "Photograph the affected crop with any mobile device or select observed symptoms from the diagnostic checklist.",
   },
   {
-    icon: Cpu,
-    title: "AI Analysis",
-    desc: "Our system cross-references symptoms against a comprehensive disease database to find matches.",
+    code: "02/ANLYS",
+    title: "Neural Interpretation",
+    desc: "Symptoms are cross-referenced against our pathology database and matched against known biological markers.",
   },
   {
-    icon: FileText,
-    title: "Get Treatment Plan",
-    desc: "Receive detailed treatment recommendations and prevention strategies for identified diseases.",
+    code: "03/RESLV",
+    title: "Clinical Resolution",
+    desc: "Receive site-specific treatment prescriptions and prevention protocols to protect crop integrity and yield.",
   },
 ];
 
 const HowItWorks = () => {
   return (
-    <section id="how-it-works" className="py-20 bg-background">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-14">
-          <h2 className="text-4xl md:text-5xl font-serif mb-4">
-            How It <span className="text-gradient-green">Works</span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Three simple steps to protect your crops
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {steps.map((step, i) => (
-            <div key={step.title} className="text-center space-y-4">
-              <div className="mx-auto w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <step.icon className="w-8 h-8 text-primary" />
-              </div>
-              <div className="text-sm font-semibold text-primary">Step {i + 1}</div>
-              <h3 className="font-serif text-xl">{step.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {step.desc}
-              </p>
-            </div>
-          ))}
-        </div>
+    <section id="how-it-works" className="max-w-7xl mx-auto px-6 py-24 border-b border-foreground/10">
+      <div className="flex justify-between items-baseline mb-16">
+        <h2 className="eyebrow">The Methodology</h2>
+        <p className="eyebrow opacity-40 italic">Technical Documentation v.2.4</p>
+      </div>
+      <div className="grid md:grid-cols-3 gap-12">
+        {steps.map((step) => (
+          <div key={step.code} className="pt-8 border-t border-foreground/25">
+            <span className="block font-mono text-[10px] mb-8 text-primary tracking-wider">{step.code}</span>
+            <h3 className="text-2xl font-serif mb-4">{step.title}</h3>
+            <p className="text-sm text-foreground/60 leading-relaxed">{step.desc}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
