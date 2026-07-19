@@ -1,6 +1,5 @@
 import { Check, Sparkles, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const features = [
