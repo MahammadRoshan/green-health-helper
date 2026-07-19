@@ -1,6 +1,5 @@
 import { Check, Sparkles, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const features = [
@@ -12,23 +11,13 @@ const features = [
 ];
 
 const SubscribeDialog = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
-  const { user, refreshProfile } = useAuth();
+  const { user } = useAuth();
 
   if (!open) return null;
 
   const handleSubscribe = async () => {
     if (!user) return;
-    const { error } = await supabase
-      .from("profiles")
-      .update({ is_subscribed: true })
-      .eq("id", user.id);
-    if (error) {
-      toast.error("Could not update subscription");
-      return;
-    }
-    toast.success("Welcome to CropGuard Pro!");
-    await refreshProfile();
-    onClose();
+    toast.info("Payments are not yet enabled. Checkout will be available soon.");
   };
 
   return (
