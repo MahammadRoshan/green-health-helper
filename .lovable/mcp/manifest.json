@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "sdk_version": "0.23.0",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://bfmjbukolexlnjgnhefw.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "cropguard-mcp",
+      "version": "0.1.0",
+      "title": "CropGuard"
+    },
+    "tools": [
+      {
+        "name": "list_diseases",
+        "title": "List crop diseases",
+        "description": "Return the full CropGuard almanac of crop diseases with symptoms, treatment, prevention, and severity.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "crop": {
+              "type": "string",
+              "description": "Optional case-insensitive substring filter matched against the disease's crop field."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "search_diseases_by_symptoms",
+        "title": "Diagnose by symptoms",
+        "description": "Given a list of observed symptoms, return likely crop diseases ranked by how many symptoms match. Use one or more of the supported symptom labels.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "symptoms": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "description": "List of observed symptoms. Supported labels: Yellow leaves, Brown spots on leaves, Wilting, White powdery coating, Black spots, Curling leaves, Stunted growth, Root rot, Fruit discoloration, Stem lesions, Leaf holes, Mold growth. Free-form text is matched case-insensitively."
+            }
+          },
+          "required": [
+            "symptoms"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_my_profile",
+        "title": "Get my CropGuard profile",
+        "description": "Return the signed-in user's CropGuard profile, including email, full name, login count, and subscription status.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
