@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import DiseaseDetector from "@/components/DiseaseDetector";
+import AiScanner from "@/components/AiScanner";
 import HowItWorks from "@/components/HowItWorks";
 import DiseaseDatabase from "@/components/DiseaseDatabase";
 import Paywall from "@/components/Paywall";
@@ -33,6 +34,7 @@ const Index = () => {
         <>
           <main>
             <HeroSection />
+            <AiScanner />
             <DiseaseDetector />
             <HowItWorks />
             <DiseaseDatabase />
