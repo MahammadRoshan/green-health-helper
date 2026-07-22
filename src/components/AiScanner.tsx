@@ -206,13 +206,33 @@ const AiScanner = () => {
             )}
           </div>
 
+          <div className="flex items-center justify-between gap-3 pt-2 border-t border-foreground/10">
+            <div className="eyebrow opacity-60">
+              {isSubscribed ? (
+                <span className="text-accent">Pro · Unlimited scans</span>
+              ) : (
+                <>
+                  {credits} credits · {SCAN_COST} per scan
+                  {!canScan && (
+                    <button
+                      onClick={() => setSubOpen(true)}
+                      className="ml-3 text-destructive underline underline-offset-4"
+                    >
+                      Subscribe to continue
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+
           <div className="flex gap-3">
             <button
               onClick={analyze}
-              disabled={!image || loading}
+              disabled={!image || loading || !canScan}
               className="eyebrow px-6 py-3 bg-primary text-primary-foreground hover:bg-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              {loading ? "Analyzing…" : "Run AI Analysis →"}
+              {loading ? "Analyzing…" : canScan ? "Run AI Analysis →" : "Out of credits"}
             </button>
             {(image || cameraOn) && (
               <button
@@ -317,6 +337,7 @@ const AiScanner = () => {
           )}
         </div>
       </div>
+      <SubscribeDialog open={subOpen} onClose={() => setSubOpen(false)} />
     </section>
   );
 };
