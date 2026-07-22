@@ -17,6 +17,7 @@ export type Database = {
       profiles: {
         Row: {
           created_at: string
+          credits: number
           email: string | null
           full_name: string | null
           id: string
@@ -26,6 +27,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          credits?: number
           email?: string | null
           full_name?: string | null
           id: string
@@ -35,6 +37,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          credits?: number
           email?: string | null
           full_name?: string | null
           id?: string
@@ -49,6 +52,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      deduct_credits: { Args: { amount: number }; Returns: number }
       increment_login_count: { Args: never; Returns: number }
     }
     Enums: {

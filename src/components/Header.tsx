@@ -7,7 +7,8 @@ const Header = () => {
   const { user, profile, signOut } = useAuth();
   const [subOpen, setSubOpen] = useState(false);
 
-  const showSubscribe = !!profile && profile.login_count > 2 && !profile.is_subscribed;
+  const lowCredits = !!profile && !profile.is_subscribed && profile.credits < 10;
+  const showSubscribe = !!profile && !profile.is_subscribed && (profile.login_count > 2 || lowCredits);
 
   return (
     <header className="sticky top-0 z-50 bg-background/85 backdrop-blur-xl border-b border-foreground/10">
@@ -23,12 +24,23 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-3">
+          {profile && !profile.is_subscribed && (
+            <span
+              className={`hidden sm:inline-flex items-center gap-2 border px-3 py-1.5 eyebrow ${
+                lowCredits ? "border-destructive text-destructive" : "border-foreground/25 text-foreground/80"
+              }`}
+              title="AI scan credits"
+            >
+              {profile.credits} credits
+            </span>
+          )}
+
           {showSubscribe && (
             <button
               onClick={() => setSubOpen(true)}
               className="hidden sm:inline-flex items-center gap-2 bg-accent text-accent-foreground px-4 py-2 eyebrow hover:bg-accent/90 transition-colors"
             >
-              Subscribe · Pro
+              {lowCredits ? "Out of credits · Subscribe" : "Subscribe · Pro"}
             </button>
           )}
 

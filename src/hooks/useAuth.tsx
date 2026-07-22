@@ -8,6 +8,7 @@ type Profile = {
   full_name: string | null;
   login_count: number;
   is_subscribed: boolean;
+  credits: number;
 };
 
 type AuthContextValue = {
@@ -30,7 +31,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const fetchProfile = async (userId: string) => {
     const { data } = await supabase
       .from("profiles")
-      .select("id,email,full_name,login_count,is_subscribed")
+      .select("id,email,full_name,login_count,is_subscribed,credits")
       .eq("id", userId)
       .maybeSingle();
     if (data) setProfile(data as Profile);

@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
+import SubscribeDialog from "./SubscribeDialog";
+
+const SCAN_COST = 10;
 
 type Diagnosis = {
   crop: string;
@@ -21,13 +25,19 @@ const severityClass: Record<Diagnosis["severity"], string> = {
 };
 
 const AiScanner = () => {
+  const { profile, refreshProfile } = useAuth();
   const [mode, setMode] = useState<"upload" | "camera">("upload");
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [diagnosis, setDiagnosis] = useState<Diagnosis | null>(null);
   const [cameraOn, setCameraOn] = useState(false);
+  const [subOpen, setSubOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  const credits = profile?.credits ?? 0;
+  const isSubscribed = !!profile?.is_subscribed;
+  const canScan = isSubscribed || credits >= SCAN_COST;
 
   const stopCamera = useCallback(() => {
     streamRef.current?.getTracks().forEach((t) => t.stop());
@@ -83,6 +93,11 @@ const AiScanner = () => {
 
   const analyze = async () => {
     if (!image) return;
+    if (!canScan) {
+      setSubOpen(true);
+      toast.error("You need at least 10 credits per scan. Subscribe for unlimited scans.");
+      return;
+    }
     setLoading(true);
     setDiagnosis(null);
     try {
@@ -92,6 +107,11 @@ const AiScanner = () => {
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
       setDiagnosis(data.diagnosis);
+      if (!isSubscribed) {
+        const { error: dErr } = await supabase.rpc("deduct_credits", { amount: SCAN_COST });
+        if (dErr) console.error("deduct_credits", dErr);
+        await refreshProfile();
+      }
     } catch (e: any) {
       console.error(e);
       toast.error(e?.message || "Analysis failed");
@@ -186,13 +206,33 @@ const AiScanner = () => {
             )}
           </div>
 
+          <div className="flex items-center justify-between gap-3 pt-2 border-t border-foreground/10">
+            <div className="eyebrow opacity-60">
+              {isSubscribed ? (
+                <span className="text-accent">Pro · Unlimited scans</span>
+              ) : (
+                <>
+                  {credits} credits · {SCAN_COST} per scan
+                  {!canScan && (
+                    <button
+                      onClick={() => setSubOpen(true)}
+                      className="ml-3 text-destructive underline underline-offset-4"
+                    >
+                      Subscribe to continue
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+
           <div className="flex gap-3">
             <button
               onClick={analyze}
-              disabled={!image || loading}
+              disabled={!image || loading || !canScan}
               className="eyebrow px-6 py-3 bg-primary text-primary-foreground hover:bg-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              {loading ? "Analyzing…" : "Run AI Analysis →"}
+              {loading ? "Analyzing…" : canScan ? "Run AI Analysis →" : "Out of credits"}
             </button>
             {(image || cameraOn) && (
               <button
@@ -297,6 +337,7 @@ const AiScanner = () => {
           )}
         </div>
       </div>
+      <SubscribeDialog open={subOpen} onClose={() => setSubOpen(false)} />
     </section>
   );
 };
