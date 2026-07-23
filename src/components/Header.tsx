@@ -14,13 +14,15 @@ const Header = () => {
     <header className="sticky top-0 z-50 bg-background/85 backdrop-blur-xl border-b border-foreground/10">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="font-serif text-2xl tracking-tight uppercase">
-          CropGuard
+          Green Health
         </Link>
 
-        <nav className="hidden md:flex items-center gap-10">
-          <a href="#detect" className="eyebrow opacity-60 hover:opacity-100 transition-opacity">Intelligence</a>
+        <nav className="hidden md:flex items-center gap-8">
+          <a href="#scanner" className="eyebrow opacity-60 hover:opacity-100 transition-opacity">Scanner</a>
+          <a href="#agents" className="eyebrow opacity-60 hover:opacity-100 transition-opacity">Agents</a>
           <a href="#database" className="eyebrow opacity-60 hover:opacity-100 transition-opacity">Database</a>
-          <a href="#how-it-works" className="eyebrow opacity-60 hover:opacity-100 transition-opacity">Methodology</a>
+          <a href="#pricing" className="eyebrow opacity-60 hover:opacity-100 transition-opacity">Pricing</a>
+          <a href="#contact" className="eyebrow opacity-60 hover:opacity-100 transition-opacity">Contact</a>
         </nav>
 
         <div className="flex items-center gap-3">

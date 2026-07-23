@@ -18,31 +18,37 @@ export type Database = {
         Row: {
           created_at: string
           credits: number
+          credits_refreshed_at: string
           email: string | null
           full_name: string | null
           id: string
           is_subscribed: boolean
           login_count: number
+          subscription_tier: string
           updated_at: string
         }
         Insert: {
           created_at?: string
           credits?: number
+          credits_refreshed_at?: string
           email?: string | null
           full_name?: string | null
           id: string
           is_subscribed?: boolean
           login_count?: number
+          subscription_tier?: string
           updated_at?: string
         }
         Update: {
           created_at?: string
           credits?: number
+          credits_refreshed_at?: string
           email?: string | null
           full_name?: string | null
           id?: string
           is_subscribed?: boolean
           login_count?: number
+          subscription_tier?: string
           updated_at?: string
         }
         Relationships: []
@@ -54,6 +60,7 @@ export type Database = {
     Functions: {
       deduct_credits: { Args: { amount: number }; Returns: number }
       increment_login_count: { Args: never; Returns: number }
+      refresh_monthly_credits: { Args: never; Returns: number }
     }
     Enums: {
       [_ in never]: never

@@ -116,7 +116,7 @@ const ChatAgent = () => {
         <div className="fixed bottom-6 right-6 z-50 w-[92vw] max-w-md h-[70vh] max-h-[640px] bg-background border border-foreground/20 shadow-2xl flex flex-col animate-fade-in-up">
           <div className="flex items-center justify-between px-4 py-3 border-b border-foreground/15 bg-foreground text-background">
             <div>
-              <p className="eyebrow opacity-70">CropGuard</p>
+              <p className="eyebrow opacity-70">Green Health</p>
               <p className="font-serif italic text-lg leading-none">Agent</p>
             </div>
             <div className="flex items-center gap-2">
