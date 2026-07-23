@@ -1,76 +1,152 @@
-import { Check, Sparkles, X } from "lucide-react";
+import { Check, Sparkles, Smartphone, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { useState } from "react";
 
-const features = [
-  "Unlimited AI disease scans",
-  "Priority image analysis",
-  "Personalized treatment plans",
-  "Full diagnosis history & exports",
-  "Early-access to new crop models",
-];
+type Tier = "basic" | "pro";
 
-const SubscribeDialog = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+const PLANS: Record<Tier, { name: string; price: number; features: string[]; tag: string }> = {
+  basic: {
+    name: "Green Health · Basic",
+    price: 99,
+    tag: "Everyday grower",
+    features: [
+      "100 AI scan credits refreshed every month",
+      "Symptom chat with the Green Health agent",
+      "Full disease almanac & prevention library",
+      "Email support within 48 hours",
+    ],
+  },
+  pro: {
+    name: "Green Health · Pro",
+    price: 299,
+    tag: "Unlimited farm",
+    features: [
+      "Unlimited AI disease scans (photo + live)",
+      "Priority Gemini vision analysis",
+      "Personalized treatment & spray schedules",
+      "Full diagnosis history & CSV export",
+      "24/7 priority chat with the AI agronomist",
+      "Early access to new crop models",
+    ],
+  },
+};
+
+// Merchant identity is masked — never expose the raw phone number in the UI.
+const MERCHANT_NAME = "Green Health Payment";
+const MERCHANT_VPA = "8688128769@ybl"; // PhonePe UPI handle (hidden from UI)
+
+const buildUpiLink = (tier: Tier) => {
+  const p = PLANS[tier];
+  const params = new URLSearchParams({
+    pa: MERCHANT_VPA,
+    pn: MERCHANT_NAME,
+    am: String(p.price),
+    cu: "INR",
+    tn: `${p.name} subscription`,
+  });
+  return `upi://pay?${params.toString()}`;
+};
+
+const SubscribeDialog = ({
+  open,
+  onClose,
+  defaultTier = "pro",
+}: {
+  open: boolean;
+  onClose: () => void;
+  defaultTier?: Tier;
+}) => {
   const { user } = useAuth();
+  const [tier, setTier] = useState<Tier>(defaultTier);
 
   if (!open) return null;
+  const plan = PLANS[tier];
 
-  const handleSubscribe = async () => {
+  const handlePay = () => {
     if (!user) return;
-    toast.info("Payments are not yet enabled. Checkout will be available soon.");
+    try {
+      window.location.href = buildUpiLink(tier);
+      toast.success(`Opening ${MERCHANT_NAME}…`, {
+        description: "Complete the payment in your UPI app. Your plan activates within a minute.",
+      });
+    } catch {
+      toast.error("Could not open UPI app. Please try from your phone.");
+    }
   };
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-foreground/60 backdrop-blur-sm animate-fade-in-up"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-foreground/70 backdrop-blur-md animate-fade-in-up"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-md rounded-2xl bg-card border border-border shadow-2xl overflow-hidden"
+        className="relative w-full max-w-lg bg-background border border-foreground/15 shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
+          className="absolute top-4 right-4 text-background/70 hover:text-background z-10"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="bg-gradient-to-br from-primary via-primary to-accent p-8 text-primary-foreground">
-          <div className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/20 px-3 py-1 mb-4 text-xs font-semibold">
+        <div className="bg-foreground text-background p-8">
+          <div className="inline-flex items-center gap-2 border border-accent/60 text-accent px-3 py-1 mb-5 eyebrow">
             <Sparkles className="w-3.5 h-3.5" />
-            CROPGUARD PRO
+            Green Health Membership
           </div>
-          <h2 className="font-serif text-3xl mb-2">Grow smarter, faster</h2>
-          <p className="text-primary-foreground/80 text-sm">
-            You're using CropGuard a lot — unlock the pro tools farmers love.
+          <h2 className="font-serif text-4xl leading-tight mb-2">
+            Choose your <span className="italic">plan</span>
+          </h2>
+          <p className="text-background/70 text-sm max-w-sm">
+            Instant activation via UPI · secure payment through {MERCHANT_NAME}.
           </p>
-          <div className="mt-5 flex items-baseline gap-2">
-            <span className="text-4xl font-bold">$9</span>
-            <span className="text-primary-foreground/70 text-sm">/ month</span>
+
+          <div className="grid grid-cols-2 gap-2 mt-6">
+            {(Object.keys(PLANS) as Tier[]).map((t) => (
+              <button
+                key={t}
+                onClick={() => setTier(t)}
+                className={`p-4 border text-left transition-colors ${
+                  tier === t
+                    ? "border-accent bg-accent/10"
+                    : "border-background/25 hover:border-background/60"
+                }`}
+              >
+                <p className="eyebrow opacity-70 mb-1">{PLANS[t].tag}</p>
+                <p className="font-serif text-2xl leading-none">
+                  ₹{PLANS[t].price}
+                  <span className="text-xs opacity-60 ml-1">/mo</span>
+                </p>
+              </button>
+            ))}
           </div>
         </div>
 
         <div className="p-8">
-          <ul className="space-y-3 mb-6">
-            {features.map((f) => (
+          <div className="mb-5">
+            <p className="eyebrow opacity-60 mb-1">You selected</p>
+            <p className="font-serif text-2xl">{plan.name}</p>
+          </div>
+          <ul className="space-y-2.5 mb-6">
+            {plan.features.map((f) => (
               <li key={f} className="flex items-start gap-3 text-sm">
-                <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-success/15 flex items-center justify-center">
-                  <Check className="w-3 h-3 text-success" />
-                </span>
+                <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                 <span>{f}</span>
               </li>
             ))}
           </ul>
 
           <button
-            onClick={handleSubscribe}
-            className="w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground hover:opacity-90 transition-all"
+            onClick={handlePay}
+            className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3.5 eyebrow hover:bg-foreground transition-colors"
           >
-            Subscribe now
+            <Smartphone className="w-4 h-4" />
+            Pay ₹{plan.price} via UPI · {MERCHANT_NAME}
           </button>
-          <p className="text-xs text-center text-muted-foreground mt-3">
-            Cancel anytime. No card required for this demo.
+          <p className="text-[11px] text-center text-muted-foreground mt-3">
+            Opens PhonePe / Google Pay / any UPI app. Cancel anytime.
           </p>
         </div>
       </div>
