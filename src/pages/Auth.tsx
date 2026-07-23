@@ -74,7 +74,7 @@ const Auth = () => {
       <div className="w-full max-w-md">
         <Link to="/" className="flex items-center justify-center gap-2 font-serif text-2xl mb-8">
           <Leaf className="w-7 h-7 text-primary" />
-          CropGuard
+          Green Health
         </Link>
 
         <div className="rounded-2xl border border-border bg-card/80 backdrop-blur-xl p-8 shadow-xl">
@@ -158,7 +158,7 @@ const Auth = () => {
           </form>
 
           <p className="text-sm text-center text-muted-foreground mt-6">
-            {mode === "login" ? "New to CropGuard?" : "Already have an account?"}{" "}
+            {mode === "login" ? "New to Green Health?" : "Already have an account?"}{" "}
             <button
               onClick={() => setMode(mode === "login" ? "signup" : "login")}
               className="text-primary font-medium hover:underline"
