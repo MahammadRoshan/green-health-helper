@@ -193,7 +193,11 @@ const AiScanner = () => {
                 )}
               </>
             ) : image ? (
-              <img src={image} alt="Specimen" className="w-full h-full object-cover" />
+              <img
+                src={image}
+                alt="Uploaded crop leaf specimen awaiting AI disease analysis"
+                className="w-full h-full object-cover"
+              />
             ) : (
               <label className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer hover:bg-secondary/60 transition-colors">
                 <span className="eyebrow mb-2 opacity-60">Upload crop image</span>
