@@ -1,27 +1,76 @@
 // Analyze crop image with Lovable AI (Gemini vision) and return diagnosis
+import { createClient } from "npm:@supabase/supabase-js@2";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+const SCAN_COST = 10;
+const MAX_IMAGE_CHARS = 8_000_000; // ~6MB binary as data URL
+
+const json = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
+    // --- Authentication ---
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader?.startsWith("Bearer ")) {
+      return json({ error: "Unauthorized" }, 401);
+    }
+
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_ANON_KEY")!,
+      { global: { headers: { Authorization: authHeader } } },
+    );
+
+    const token = authHeader.replace("Bearer ", "");
+    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims?.sub) {
+      return json({ error: "Unauthorized" }, 401);
+    }
+    const userId = claimsData.claims.sub as string;
+
+    // --- Input validation ---
     const { image } = await req.json();
-    if (!image || typeof image !== "string") {
-      return new Response(JSON.stringify({ error: "Missing image (data URL)" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    if (!image || typeof image !== "string" || !image.startsWith("data:image/")) {
+      return json({ error: "Missing or invalid image (data URL)" }, 400);
+    }
+    if (image.length > MAX_IMAGE_CHARS) {
+      return json({ error: "Image too large" }, 413);
+    }
+
+    // --- Server-side credit / subscription enforcement (before AI call) ---
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("is_subscribed, credits")
+      .eq("id", userId)
+      .maybeSingle();
+
+    if (profileError || !profile) {
+      console.error("profile lookup failed", profileError);
+      return json({ error: "Unable to verify account" }, 403);
+    }
+
+    const isSubscribed = !!profile.is_subscribed;
+    if (!isSubscribed) {
+      const { error: deductError } = await supabase.rpc("deduct_credits", { amount: SCAN_COST });
+      if (deductError) {
+        console.error("deduct_credits failed", deductError);
+        return json({ error: "Insufficient credits. Subscribe for unlimited scans." }, 402);
+      }
     }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
-      return new Response(JSON.stringify({ error: "LOVABLE_API_KEY not configured" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return json({ error: "AI service unavailable" }, 500);
     }
 
     const body = {
@@ -85,30 +134,19 @@ Deno.serve(async (req) => {
           : resp.status === 402
           ? "AI credits exhausted. Add credits in workspace billing."
           : "AI analysis failed.";
-      return new Response(JSON.stringify({ error: msg, status: resp.status }), {
-        status: resp.status,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return json({ error: msg }, resp.status);
     }
 
     const data = await resp.json();
     const call = data?.choices?.[0]?.message?.tool_calls?.[0];
     if (!call?.function?.arguments) {
-      return new Response(JSON.stringify({ error: "No diagnosis returned" }), {
-        status: 502,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return json({ error: "No diagnosis returned" }, 502);
     }
 
     const diagnosis = JSON.parse(call.function.arguments);
-    return new Response(JSON.stringify({ diagnosis }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return json({ diagnosis, creditsCharged: isSubscribed ? 0 : SCAN_COST });
   } catch (e) {
     console.error(e);
-    return new Response(JSON.stringify({ error: (e as Error).message }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return json({ error: "Unexpected error" }, 500);
   }
 });
