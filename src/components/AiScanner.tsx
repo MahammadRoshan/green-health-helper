@@ -107,11 +107,8 @@ const AiScanner = () => {
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
       setDiagnosis(data.diagnosis);
-      if (!isSubscribed) {
-        const { error: dErr } = await supabase.rpc("deduct_credits", { amount: SCAN_COST });
-        if (dErr) console.error("deduct_credits", dErr);
-        await refreshProfile();
-      }
+      // Credits are charged server-side inside the edge function.
+      await refreshProfile();
     } catch (e: any) {
       console.error(e);
       toast.error(e?.message || "Analysis failed");
