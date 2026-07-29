@@ -101,7 +101,7 @@ const AgentSection = () => {
             Talk to a team of <span className="italic">specialist agents.</span>
           </h2>
         </div>
-        <p className="eyebrow opacity-40 max-w-xs">
+        <p className="eyebrow text-muted-foreground max-w-xs">
           Pathologist · Agronomist · Entomologist · Soil expert — powered by Gemini.
         </p>
       </div>
@@ -124,7 +124,7 @@ const AgentSection = () => {
           </figure>
 
           <div className="space-y-1">
-            <p className="eyebrow opacity-50 mb-3">Select an agent</p>
+            <p className="eyebrow text-muted-foreground mb-3">Select an agent</p>
             {AGENTS.map((a) => (
               <button
                 key={a.id}
@@ -160,7 +160,7 @@ const AgentSection = () => {
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.length === 0 ? (
               <div>
-                <p className="eyebrow opacity-50 mb-4">Try a starter question</p>
+                <p className="eyebrow text-muted-foreground mb-4">Try a starter question</p>
                 <div className="space-y-2">
                   {SUGGESTIONS.map(({ icon: Icon, text }) => (
                     <button
@@ -173,7 +173,7 @@ const AgentSection = () => {
                     </button>
                   ))}
                 </div>
-                <p className="text-xs opacity-50 mt-6 flex items-center gap-2">
+                <p className="text-xs text-muted-foreground mt-6 flex items-center gap-2">
                   <Sparkles className="w-3 h-3 text-accent" /> Free to chat · scans still cost 10 credits
                 </p>
               </div>

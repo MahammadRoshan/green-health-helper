@@ -37,7 +37,7 @@ const ContactSection = () => {
             >
               <Phone className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
               <div>
-                <p className="eyebrow opacity-50 mb-1">Call us</p>
+                <p className="eyebrow text-muted-foreground mb-1">Call us</p>
                 <p className="font-serif text-2xl italic group-hover:text-primary transition-colors">
                   +91 8500 956 337
                 </p>
@@ -49,7 +49,7 @@ const ContactSection = () => {
             >
               <Mail className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
               <div>
-                <p className="eyebrow opacity-50 mb-1">Email us</p>
+                <p className="eyebrow text-muted-foreground mb-1">Email us</p>
                 <p className="font-serif text-2xl italic group-hover:text-primary transition-colors break-all">
                   mahammadroshan72@gmail.com
                 </p>
@@ -58,7 +58,7 @@ const ContactSection = () => {
             <div className="flex items-start gap-5 border-t border-b border-foreground/15 py-6">
               <MapPin className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
               <div>
-                <p className="eyebrow opacity-50 mb-1">Serving</p>
+                <p className="eyebrow text-muted-foreground mb-1">Serving</p>
                 <p className="font-serif text-2xl italic">Farmers across India & beyond</p>
               </div>
             </div>

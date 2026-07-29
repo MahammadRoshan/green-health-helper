@@ -100,9 +100,9 @@ const Index = () => {
       <footer className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-foreground/10">
         <div>
           <div className="font-serif text-xl uppercase tracking-tight">Green Health</div>
-          <p className="text-xs opacity-50 mt-1">AI crop disease detection · Est. 2026</p>
+          <p className="text-xs text-muted-foreground mt-1">AI crop disease detection · Est. 2026</p>
         </div>
-        <div className="eyebrow opacity-40 text-center">
+        <div className="eyebrow text-muted-foreground text-center">
           Global Agritech Standard · All Rights Reserved
         </div>
         <div className="flex gap-6 flex-wrap justify-center">
