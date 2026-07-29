@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import Seo from "@/components/Seo";
 
 function safeNext(raw: string | null): string {
   if (!raw) return "/";
@@ -173,7 +174,7 @@ const Auth = () => {
           </p>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
