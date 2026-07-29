@@ -64,10 +64,20 @@ const homeJsonLd = [
 const Index = () => {
   const { user, loading } = useAuth();
 
+  const seo = (
+    <Seo
+      title="Green Health — AI Crop Disease Detection for Farmers"
+      description="Scan a crop leaf or describe symptoms and get an instant AI diagnosis, treatment plan and prevention guide, plus 24/7 specialist agronomy agents."
+      path="/"
+      jsonLd={homeJsonLd}
+    />
+  );
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="eyebrow opacity-60">Loading…</div>
+        {seo}
+        <div className="eyebrow text-muted-foreground">Loading…</div>
       </div>
     );
   }
@@ -76,6 +86,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {seo}
       <Header />
       <main>
         <HeroSection />
