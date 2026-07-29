@@ -41,13 +41,14 @@ const AgentSection = () => {
     setLoading(true);
     try {
       const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.access_token) throw new Error("Please sign in to use the agents.");
       const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-agent`;
       const resp = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          Authorization: `Bearer ${session?.access_token ?? import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
           messages: [...next.slice(0, -1), { role: "user", content: framed }],
