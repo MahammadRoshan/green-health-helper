@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import Seo from "@/components/Seo";
 
 function safeNext(raw: string | null): string {
   if (!raw) return "/";
@@ -70,7 +71,12 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/40 to-background flex items-center justify-center p-6">
+    <main className="min-h-screen bg-gradient-to-br from-background via-secondary/40 to-background flex items-center justify-center p-6">
+      <Seo
+        title="Sign In or Sign Up — Green Health"
+        description="Create your free Green Health account or sign in to scan crops, chat with AI agronomy specialists and track your disease detection history."
+        path="/auth"
+      />
       <div className="w-full max-w-md">
         <Link to="/" className="flex items-center justify-center gap-2 font-serif text-2xl mb-8">
           <Leaf className="w-7 h-7 text-primary" />
@@ -168,7 +174,7 @@ const Auth = () => {
           </p>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

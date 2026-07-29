@@ -38,6 +38,8 @@ const HeroSection = () => {
           src={heroFarm}
           alt="Precision-farmed field at dawn"
           className="w-full h-[52vh] md:h-[68vh] object-cover grayscale-[0.15] contrast-[1.05]"
+          fetchPriority="high"
+          decoding="async"
           width={1920}
           height={1080}
         />
@@ -62,7 +64,7 @@ const HeroSection = () => {
             key={s.k}
             className={`py-8 px-6 ${i > 0 ? "md:border-l border-foreground/10" : ""} ${i > 1 ? "border-t md:border-t-0" : ""} ${i === 1 ? "border-l" : ""}`}
           >
-            <span className="eyebrow opacity-50 block mb-3">{s.k}</span>
+            <span className="eyebrow text-muted-foreground block mb-3">{s.k}</span>
             <span className="font-serif text-4xl italic">{s.v}</span>
           </div>
         ))}

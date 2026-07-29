@@ -86,9 +86,10 @@ const SubscribeDialog = ({
       >
         <button
           onClick={onClose}
+          aria-label="Close subscription dialog"
           className="absolute top-4 right-4 text-background/70 hover:text-background z-10"
         >
-          <X className="w-5 h-5" />
+          <X className="w-5 h-5" aria-hidden="true" />
         </button>
 
         <div className="bg-foreground text-background p-8">

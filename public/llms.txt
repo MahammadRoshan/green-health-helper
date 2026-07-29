@@ -1,0 +1,16 @@
+# Green Health
+
+> AI-powered crop disease detection for farmers: scan a leaf photo or describe symptoms and get an instant diagnosis, treatment plan and prevention guide.
+
+Green Health combines vision-based crop scanning with specialist AI agronomy agents
+(plant pathology, agronomy, entomology, soil and nutrition) and a curated pathology
+index of common crop diseases, their symptoms and their treatments.
+
+## Pages
+
+- [Home](/): AI crop scanner, specialist agents, pathology index, pricing and contact details.
+
+## Optional
+
+- [Robots](/robots.txt): Crawling rules.
+- [Sitemap](/sitemap.xml): List of public pages.

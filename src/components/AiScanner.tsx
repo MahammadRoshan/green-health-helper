@@ -132,7 +132,7 @@ const AiScanner = () => {
             Vision-based <span className="italic">diagnosis.</span>
           </h2>
         </div>
-        <p className="hidden md:block eyebrow opacity-40 italic">Gemini vision</p>
+        <p className="hidden md:block eyebrow text-muted-foreground italic">Gemini vision</p>
       </div>
 
       <div className="grid lg:grid-cols-12 gap-12">
@@ -193,7 +193,11 @@ const AiScanner = () => {
                 )}
               </>
             ) : image ? (
-              <img src={image} alt="Specimen" className="w-full h-full object-cover" />
+              <img
+                src={image}
+                alt="Uploaded crop leaf specimen awaiting AI disease analysis"
+                className="w-full h-full object-cover"
+              />
             ) : (
               <label className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer hover:bg-secondary/60 transition-colors">
                 <span className="eyebrow mb-2 opacity-60">Upload crop image</span>
@@ -252,11 +256,11 @@ const AiScanner = () => {
         <div className="lg:col-span-5 space-y-8">
           <div className="grid grid-cols-2 gap-6 pb-6 border-b border-foreground/25">
             <div>
-              <span className="eyebrow opacity-50 block mb-2">Model</span>
+              <span className="eyebrow text-muted-foreground block mb-2">Model</span>
               <span className="font-serif text-2xl italic">Gemini 3</span>
             </div>
             <div>
-              <span className="eyebrow opacity-50 block mb-2">Confidence</span>
+              <span className="eyebrow text-muted-foreground block mb-2">Confidence</span>
               <span className="font-serif text-2xl italic">
                 {diagnosis ? `${Math.round(diagnosis.confidence * 100)}%` : "—"}
               </span>
@@ -265,14 +269,14 @@ const AiScanner = () => {
 
           {loading ? (
             <div className="pt-4">
-              <p className="eyebrow opacity-40 mb-4">Processing</p>
+              <p className="eyebrow text-muted-foreground mb-4">Processing</p>
               <p className="font-serif text-3xl leading-tight text-foreground/70">
                 Analyzing specimen imagery…
               </p>
             </div>
           ) : !diagnosis ? (
             <div className="pt-4">
-              <p className="eyebrow opacity-40 mb-4">Awaiting scan</p>
+              <p className="eyebrow text-muted-foreground mb-4">Awaiting scan</p>
               <p className="font-serif text-3xl leading-tight text-foreground/70">
                 Upload or capture a crop image, then run AI analysis.
               </p>
@@ -281,7 +285,7 @@ const AiScanner = () => {
             <article className="pt-4 animate-fade-in-up">
               <div className="flex items-start justify-between mb-3 gap-4">
                 <div>
-                  <p className="eyebrow opacity-40 mb-2">Diagnosis</p>
+                  <p className="eyebrow text-muted-foreground mb-2">Diagnosis</p>
                   <h3 className="font-serif text-3xl leading-tight">{diagnosis.disease}</h3>
                   <p className="text-xs text-foreground/60 italic mt-1">{diagnosis.crop}</p>
                 </div>
@@ -297,7 +301,7 @@ const AiScanner = () => {
                   <ul className="space-y-1.5">
                     {diagnosis.symptoms.map((s) => (
                       <li key={s} className="text-sm text-foreground/70 flex gap-3">
-                        <span className="opacity-40">—</span>
+                        <span className="opacity-70">—</span>
                         {s}
                       </li>
                     ))}

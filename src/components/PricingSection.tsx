@@ -69,7 +69,7 @@ const PricingSection = () => {
             <h3 className="font-serif text-4xl mb-4">{p.name}</h3>
             <div className="flex items-baseline gap-1 mb-6">
               <span className="font-serif text-6xl">₹{p.price}</span>
-              <span className={`text-sm ${p.highlight ? "opacity-60" : "opacity-50"}`}>/ month</span>
+              <span className={`text-sm ${p.highlight ? "opacity-60" : "opacity-70"}`}>/ month</span>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
               {p.features.map((f) => (

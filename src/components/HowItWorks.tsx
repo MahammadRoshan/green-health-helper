@@ -21,7 +21,7 @@ const HowItWorks = () => {
     <section id="how-it-works" className="max-w-7xl mx-auto px-6 py-24 border-b border-foreground/10">
       <div className="flex justify-between items-baseline mb-16">
         <h2 className="eyebrow">The Methodology</h2>
-        <p className="eyebrow opacity-40 italic">Technical Documentation v.2.4</p>
+        <p className="eyebrow text-muted-foreground italic">Technical Documentation v.2.4</p>
       </div>
       <div className="grid md:grid-cols-3 gap-12">
         {steps.map((step) => (

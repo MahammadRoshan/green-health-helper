@@ -16,7 +16,7 @@ const DiseaseDatabase = () => {
             The pathology <span className="italic">index.</span>
           </h2>
         </div>
-        <p className="hidden md:block eyebrow opacity-40">{diseases.length} entries · updated 2026</p>
+        <p className="hidden md:block eyebrow text-muted-foreground">{diseases.length} entries · updated 2026</p>
       </div>
 
       <div className="border-t border-foreground/25">
@@ -25,7 +25,7 @@ const DiseaseDatabase = () => {
             key={d.id}
             className="grid md:grid-cols-12 gap-6 py-10 border-b border-foreground/10 group"
           >
-            <div className="md:col-span-1 font-mono text-[10px] text-foreground/40 tracking-wider">
+            <div className="md:col-span-1 font-mono text-[10px] text-muted-foreground tracking-wider">
               {String(i + 1).padStart(2, "0")}
             </div>
             <div className="md:col-span-4">
@@ -42,7 +42,7 @@ const DiseaseDatabase = () => {
               {d.description}
             </div>
             <div className="md:col-span-3">
-              <p className="eyebrow opacity-50 mb-3">Markers</p>
+              <p className="eyebrow text-muted-foreground mb-3">Markers</p>
               <div className="flex flex-wrap gap-1.5">
                 {d.symptoms.map((s) => (
                   <span
@@ -53,7 +53,7 @@ const DiseaseDatabase = () => {
                   </span>
                 ))}
               </div>
-              <p className="eyebrow opacity-40 mt-4">
+              <p className="eyebrow text-muted-foreground mt-4">
                 {d.treatment.length} treatments · {d.prevention.length} preventions
               </p>
             </div>
