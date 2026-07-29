@@ -38,6 +38,8 @@ const HeroSection = () => {
           src={heroFarm}
           alt="Precision-farmed field at dawn"
           className="w-full h-[52vh] md:h-[68vh] object-cover grayscale-[0.15] contrast-[1.05]"
+          fetchPriority="high"
+          decoding="async"
           width={1920}
           height={1080}
         />

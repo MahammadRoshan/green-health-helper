@@ -301,7 +301,7 @@ const AiScanner = () => {
                   <ul className="space-y-1.5">
                     {diagnosis.symptoms.map((s) => (
                       <li key={s} className="text-sm text-foreground/70 flex gap-3">
-                        <span className="opacity-40">—</span>
+                        <span className="opacity-70">—</span>
                         {s}
                       </li>
                     ))}
