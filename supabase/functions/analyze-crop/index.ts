@@ -61,7 +61,15 @@ Deno.serve(async (req) => {
 
     const isSubscribed = !!profile.is_subscribed;
     if (!isSubscribed) {
-      const { error: deductError } = await supabase.rpc("deduct_credits", { amount: SCAN_COST });
+      // Credit changes are server-only: use the service-role client.
+      const admin = createClient(
+        Deno.env.get("SUPABASE_URL")!,
+        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      );
+      const { error: deductError } = await admin.rpc("deduct_credits", {
+        target_user: userId,
+        amount: SCAN_COST,
+      });
       if (deductError) {
         console.error("deduct_credits failed", deductError);
         return json({ error: "Insufficient credits. Subscribe for unlimited scans." }, 402);

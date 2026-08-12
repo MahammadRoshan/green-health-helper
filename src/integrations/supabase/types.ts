@@ -58,9 +58,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      deduct_credits: { Args: { amount: number }; Returns: number }
-      increment_login_count: { Args: never; Returns: number }
-      refresh_monthly_credits: { Args: never; Returns: number }
+      deduct_credits: {
+        Args: { amount: number; target_user: string }
+        Returns: number
+      }
+      increment_login_count: { Args: { target_user: string }; Returns: number }
+      refresh_monthly_credits: {
+        Args: { target_user: string }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never

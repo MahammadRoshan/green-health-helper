@@ -44,7 +44,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (sess?.user) {
         setTimeout(() => {
           if (event === "SIGNED_IN") {
-            supabase.rpc("increment_login_count").then(() => fetchProfile(sess.user.id));
+            supabase.functions
+              .invoke("session-init")
+              .catch(() => undefined)
+              .then(() => fetchProfile(sess.user.id));
           } else {
             fetchProfile(sess.user.id);
           }
