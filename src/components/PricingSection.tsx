@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
 import SubscribeDialog from "./SubscribeDialog";
 
 type Tier = "basic" | "pro";
@@ -38,15 +38,14 @@ const PricingSection = () => {
   const [open, setOpen] = useState<Tier | null>(null);
 
   return (
-    <section id="pricing" className="max-w-7xl mx-auto px-6 py-24 border-b border-foreground/10">
+    <section id="pricing" className="max-w-7xl mx-auto px-6 py-24">
       <div className="text-center mb-16">
-        <p className="eyebrow text-primary mb-4">Section V · Membership</p>
-        <h2 className="font-serif text-5xl md:text-7xl leading-[0.9]">
-          Simple, <span className="italic">honest pricing.</span>
+        <p className="eyebrow text-primary mb-4">Membership</p>
+        <h2 className="font-serif text-4xl md:text-6xl leading-[0.95]">
+          Simple, <span className="italic text-gradient">honest pricing.</span>
         </h2>
         <p className="text-foreground/60 mt-5 max-w-lg mx-auto">
-          Pay securely through Green Health Payment on any UPI app.
-          Cancel anytime — no lock-in.
+          Pay securely through Green Health Payment on any UPI app. Cancel anytime — no lock-in.
         </p>
       </div>
 
@@ -54,37 +53,35 @@ const PricingSection = () => {
         {plans.map((p) => (
           <div
             key={p.id}
-            className={`relative border p-8 flex flex-col ${
-              p.highlight
-                ? "border-foreground bg-foreground text-background"
-                : "border-foreground/20 bg-background"
+            className={`relative rounded-3xl p-8 flex flex-col glass glass-hover ${
+              p.highlight ? "border-primary/40 glow-primary" : ""
             }`}
           >
             {p.highlight && (
-              <span className="absolute -top-3 left-8 bg-accent text-accent-foreground eyebrow px-3 py-1">
-                Most popular
+              <span className="absolute -top-3 left-8 inline-flex items-center gap-1.5 rounded-full bg-primary text-primary-foreground eyebrow px-3 py-1">
+                <Sparkles className="w-3 h-3" /> Most popular
               </span>
             )}
-            <p className={`eyebrow mb-2 ${p.highlight ? "text-accent" : "opacity-60"}`}>{p.tag}</p>
+            <p className="eyebrow text-muted-foreground mb-2">{p.tag}</p>
             <h3 className="font-serif text-4xl mb-4">{p.name}</h3>
-            <div className="flex items-baseline gap-1 mb-6">
-              <span className="font-serif text-6xl">₹{p.price}</span>
-              <span className={`text-sm ${p.highlight ? "opacity-60" : "opacity-70"}`}>/ month</span>
+            <div className="flex items-baseline gap-1 mb-7">
+              <span className={`font-serif text-6xl ${p.highlight ? "text-gradient" : ""}`}>₹{p.price}</span>
+              <span className="text-sm text-muted-foreground">/ month</span>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
               {p.features.map((f) => (
-                <li key={f} className="flex items-start gap-3 text-sm">
-                  <Check className={`w-4 h-4 mt-0.5 flex-shrink-0 ${p.highlight ? "text-accent" : "text-primary"}`} />
+                <li key={f} className="flex items-start gap-3 text-sm text-foreground/80">
+                  <Check className={`w-4 h-4 mt-0.5 flex-shrink-0 ${p.highlight ? "text-primary" : "text-accent"}`} />
                   <span>{f}</span>
                 </li>
               ))}
             </ul>
             <button
               onClick={() => setOpen(p.id)}
-              className={`w-full py-3.5 eyebrow transition-colors ${
+              className={`w-full rounded-full py-3.5 text-sm font-semibold transition-transform hover:scale-[1.02] ${
                 p.highlight
-                  ? "bg-accent text-accent-foreground hover:bg-background hover:text-foreground"
-                  : "bg-foreground text-background hover:bg-primary"
+                  ? "bg-primary text-primary-foreground glow-primary"
+                  : "border border-foreground/20 hover:border-primary/50 text-foreground"
               }`}
             >
               Subscribe to {p.name} →
