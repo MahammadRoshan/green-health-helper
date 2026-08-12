@@ -126,7 +126,7 @@ const ChatAgent = () => {
                   Clear
                 </button>
               )}
-              <button onClick={() => setOpen(false)} className="opacity-80 hover:opacity-100">
+              <button onClick={() => setOpen(false)} aria-label="Close chat" className="opacity-80 hover:opacity-100">
                 <X className="w-5 h-5" />
               </button>
             </div>
