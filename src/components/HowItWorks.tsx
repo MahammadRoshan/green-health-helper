@@ -1,33 +1,46 @@
+import { Camera, Cpu, Leaf } from "lucide-react";
+
 const steps = [
   {
-    code: "01/CAPT",
-    title: "Capture & Sync",
-    desc: "Photograph the affected crop with any mobile device or select observed symptoms from the diagnostic checklist.",
+    code: "01",
+    icon: Camera,
+    title: "Capture",
+    desc: "Photograph the affected crop with any phone, or tick the symptoms you can see in the field.",
   },
   {
-    code: "02/ANLYS",
-    title: "Neural Interpretation",
-    desc: "Symptoms are cross-referenced against our pathology database and matched against known biological markers.",
+    code: "02",
+    icon: Cpu,
+    title: "Analyse",
+    desc: "Our vision model cross-references the leaf against a pathology database and known biological markers.",
   },
   {
-    code: "03/RESLV",
-    title: "Clinical Resolution",
-    desc: "Receive site-specific treatment prescriptions and prevention protocols to protect crop integrity and yield.",
+    code: "03",
+    icon: Leaf,
+    title: "Treat",
+    desc: "Get a site-specific treatment prescription and prevention protocol that protects yield and cuts pesticide waste.",
   },
 ];
 
 const HowItWorks = () => {
   return (
-    <section id="how-it-works" className="max-w-7xl mx-auto px-6 py-24 border-b border-foreground/10">
-      <div className="flex justify-between items-baseline mb-16">
-        <h2 className="eyebrow">The Methodology</h2>
-        <p className="eyebrow text-muted-foreground italic">Technical Documentation v.2.4</p>
+    <section id="how-it-works" className="max-w-7xl mx-auto px-6 py-24">
+      <div className="text-center max-w-2xl mx-auto mb-16">
+        <p className="eyebrow text-primary mb-4">How it works</p>
+        <h2 className="font-serif text-4xl md:text-6xl leading-[0.95]">
+          Three steps from photo to <span className="italic text-gradient">prescription.</span>
+        </h2>
       </div>
-      <div className="grid md:grid-cols-3 gap-12">
+
+      <div className="grid md:grid-cols-3 gap-6">
         {steps.map((step) => (
-          <div key={step.code} className="pt-8 border-t border-foreground/25">
-            <span className="block font-mono text-[10px] mb-8 text-primary tracking-wider">{step.code}</span>
-            <h3 className="text-2xl font-serif mb-4">{step.title}</h3>
+          <div key={step.code} className="glass glass-hover rounded-2xl p-8">
+            <div className="flex items-center justify-between mb-8">
+              <span className="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center">
+                <step.icon className="w-5 h-5 text-primary" />
+              </span>
+              <span className="font-mono text-xs text-muted-foreground tracking-widest">{step.code}</span>
+            </div>
+            <h3 className="text-3xl font-serif mb-3">{step.title}</h3>
             <p className="text-sm text-foreground/60 leading-relaxed">{step.desc}</p>
           </div>
         ))}

@@ -106,7 +106,7 @@ const ChatAgent = () => {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-foreground text-background eyebrow px-5 py-3 shadow-2xl hover:bg-primary transition-colors"
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-primary text-primary-foreground eyebrow px-5 py-3 rounded-full glow-primary hover:bg-primary/90 transition-colors"
         >
           <MessageCircle className="w-4 h-4" />
           Ask the Agent
@@ -115,7 +115,7 @@ const ChatAgent = () => {
 
       {open && (
         <div className="fixed bottom-6 right-6 z-50 w-[92vw] max-w-md h-[70vh] max-h-[640px] bg-background border border-foreground/20 shadow-2xl flex flex-col animate-fade-in-up">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-foreground/15 bg-foreground text-background">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-foreground/10 bg-secondary text-foreground">
             <div>
               <p className="eyebrow opacity-70">Green Health</p>
               <p className="font-serif italic text-lg leading-none">Agent</p>
@@ -156,7 +156,7 @@ const ChatAgent = () => {
                 key={i}
                 className={`text-sm leading-relaxed whitespace-pre-wrap ${
                   m.role === "user"
-                    ? "ml-auto max-w-[85%] bg-foreground text-background px-3 py-2"
+                    ? "ml-auto max-w-[85%] bg-primary text-primary-foreground px-3 py-2"
                     : "mr-auto max-w-[90%] bg-background border border-foreground/15 px-3 py-2"
                 }`}
               >
@@ -183,7 +183,7 @@ const ChatAgent = () => {
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="bg-primary text-primary-foreground p-2 hover:bg-foreground transition-colors disabled:opacity-40"
+              className="bg-primary text-primary-foreground p-2 hover:bg-primary/85 transition-colors disabled:opacity-40"
             >
               <Send className="w-4 h-4" />
             </button>
