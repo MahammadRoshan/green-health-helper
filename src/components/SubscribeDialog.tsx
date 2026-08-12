@@ -77,7 +77,7 @@ const SubscribeDialog = ({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-foreground/70 backdrop-blur-md animate-fade-in-up"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/80 backdrop-blur-md animate-fade-in-up"
       onClick={onClose}
     >
       <div
@@ -87,12 +87,12 @@ const SubscribeDialog = ({
         <button
           onClick={onClose}
           aria-label="Close subscription dialog"
-          className="absolute top-4 right-4 text-background/70 hover:text-background z-10"
+          className="absolute top-4 right-4 text-foreground/70 hover:text-foreground z-10"
         >
           <X className="w-5 h-5" aria-hidden="true" />
         </button>
 
-        <div className="bg-foreground text-background p-8">
+        <div className="bg-secondary text-foreground p-8">
           <div className="inline-flex items-center gap-2 border border-accent/60 text-accent px-3 py-1 mb-5 eyebrow">
             <Sparkles className="w-3.5 h-3.5" />
             Green Health Membership
@@ -100,7 +100,7 @@ const SubscribeDialog = ({
           <h2 className="font-serif text-4xl leading-tight mb-2">
             Choose your <span className="italic">plan</span>
           </h2>
-          <p className="text-background/70 text-sm max-w-sm">
+          <p className="text-foreground/70 text-sm max-w-sm">
             Instant activation via UPI · secure payment through {MERCHANT_NAME}.
           </p>
 

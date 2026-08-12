@@ -146,7 +146,7 @@ const AiScanner = () => {
               }}
               className={`eyebrow px-4 py-2 border transition-colors ${
                 mode === "upload"
-                  ? "bg-foreground text-background border-foreground"
+                  ? "bg-primary text-primary-foreground border-primary"
                   : "border-foreground/25 hover:border-foreground/60"
               }`}
             >
@@ -156,7 +156,7 @@ const AiScanner = () => {
               onClick={() => setMode("camera")}
               className={`eyebrow px-4 py-2 border transition-colors ${
                 mode === "camera"
-                  ? "bg-foreground text-background border-foreground"
+                  ? "bg-primary text-primary-foreground border-primary"
                   : "border-foreground/25 hover:border-foreground/60"
               }`}
             >
@@ -177,7 +177,7 @@ const AiScanner = () => {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <button
                       onClick={startCamera}
-                      className="eyebrow px-6 py-3 bg-primary text-primary-foreground hover:bg-foreground transition-colors"
+                      className="eyebrow px-6 py-3 bg-primary text-primary-foreground hover:bg-primary/85 transition-colors"
                     >
                       Enable camera →
                     </button>
@@ -231,7 +231,7 @@ const AiScanner = () => {
             <button
               onClick={analyze}
               disabled={!image || loading || !canScan}
-              className="eyebrow px-6 py-3 bg-primary text-primary-foreground hover:bg-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="eyebrow px-6 py-3 bg-primary text-primary-foreground hover:bg-primary/85 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
               {loading ? "Analyzing…" : canScan ? "Run AI Analysis →" : "Out of credits"}
             </button>

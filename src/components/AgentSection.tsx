@@ -131,7 +131,7 @@ const AgentSection = () => {
                 onClick={() => setAgent(a.id)}
                 className={`w-full text-left border p-4 transition-colors ${
                   agent === a.id
-                    ? "border-foreground bg-foreground text-background"
+                    ? "border-primary bg-primary text-primary-foreground"
                     : "border-foreground/15 hover:border-foreground/40"
                 }`}
               >
@@ -183,7 +183,7 @@ const AgentSection = () => {
                   key={i}
                   className={`text-sm leading-relaxed whitespace-pre-wrap ${
                     m.role === "user"
-                      ? "ml-auto max-w-[85%] bg-foreground text-background px-4 py-3"
+                      ? "ml-auto max-w-[85%] bg-primary text-primary-foreground px-4 py-3"
                       : "mr-auto max-w-[90%] bg-background border border-foreground/15 px-4 py-3"
                   }`}
                 >
@@ -207,7 +207,7 @@ const AgentSection = () => {
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="bg-primary text-primary-foreground p-3 hover:bg-foreground transition-colors disabled:opacity-40"
+              className="bg-primary text-primary-foreground p-3 hover:bg-primary/85 transition-colors disabled:opacity-40"
             >
               <Send className="w-4 h-4" />
             </button>
