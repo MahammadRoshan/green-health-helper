@@ -141,7 +141,7 @@ const SubscribeDialog = ({
 
           <button
             onClick={handlePay}
-            className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3.5 eyebrow hover:bg-foreground transition-colors"
+            className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3.5 eyebrow hover:bg-primary/85 transition-colors"
           >
             <Smartphone className="w-4 h-4" />
             Pay ₹{plan.price} via UPI · {MERCHANT_NAME}

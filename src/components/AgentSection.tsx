@@ -118,7 +118,7 @@ const AgentSection = () => {
               width={1600}
               height={1000}
             />
-            <figcaption className="absolute bottom-4 left-4 right-4 text-background eyebrow">
+            <figcaption className="absolute bottom-4 left-4 right-4 text-foreground eyebrow">
               Fig. 02 · Specialist consultation
             </figcaption>
           </figure>
